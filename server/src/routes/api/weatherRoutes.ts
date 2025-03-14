@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from 'express';
 const router = Router();
 
-// import HistoryService from '../../service/historyService.js';
+import HistoryService from '../../service/historyService.js';
 // import WeatherService from '../../service/weatherService.js';
 
 // TODO: POST Request with city name to retrieve weather data
@@ -10,9 +10,11 @@ router.post('/', async (req: Request, res: Response) => {
     console.log('weather data post route: ', req.body);
 
     // TODO: GET weather data from city name
-    // TODO: save city to search history
 
-    res.status(200).json('Get History route')
+    // TODO: save city to search history
+    // await HistoryService.addCity('London')
+
+    res.status(200).json([])
   } catch (err) {
     console.log(err);
     res.status(500).json(err)
@@ -21,9 +23,10 @@ router.post('/', async (req: Request, res: Response) => {
 
 // TODO: GET search history
 router.get('/history', async (_req: Request, res: Response) => {
-
   try {
-    res.status(200).json('Get History route')
+    const data = await HistoryService.getCities();
+
+    res.status(200).json(data)
   } catch (err) {
     console.log(err);
     res.status(500).json(err)
